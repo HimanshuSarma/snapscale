@@ -45,17 +45,17 @@ const jobs = db.define('jobs',
 });
 
 // Optional: Manual sync if you need to create the table immediately
-// async function syncModel() {
-//   try {
-//     await db.models.jobs.sync({
-//       alter: true
-//     });
-//     console.log('✅ The jobs table was created (or already exists).');
-//   } catch (error) {
-//     console.error('❌ Error syncing model:', error);
-//   }
-// }
-// syncModel();
+async function syncModel() {
+  try {
+    await db.models.jobs.sync({
+      alter: true
+    });
+    console.log('✅ The jobs table was created (or already exists).');
+  } catch (error) {
+    console.error('❌ Error syncing model:');
+  }
+}
+syncModel();
 
 module.exports = {
   jobs,
