@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: snapscale-consumer
+spec:
+  replicas: 2 # You can scale this up if the queue gets backed up
+  selector:
+    matchLabels:
+      app: snapscale-consumer
+  template:
+    metadata:
+      labels:
+        app: snapscale-consumer
+    spec:
+      containers:
+      - name: consumer
+        image: himanshusarma123/snapscale-consumer:v1
+        resources:
+          requests:
+            memory: "256Mi"
+            cpu: "200m"
+          limits:
+            memory: "512Mi"
+            cpu: "500m"
+        envFrom:
+        - secretRef:
+            name: snapscale-secrets
