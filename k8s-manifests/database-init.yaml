@@ -13,7 +13,7 @@ spec:
     spec:
       containers:
       - name: init-db
-        image: himanshusarma123/database-init:v2
+        image: himanshusarma123/database-init:v3
         env:
           - name: DB_HOST
             valueFrom:
