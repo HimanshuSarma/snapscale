@@ -1,0 +1,57 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: snapscale-rabbitmq
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: snapscale-rabbitmq
+  template:
+    metadata:
+      labels:
+        app: snapscale-rabbitmq
+    spec:
+      containers:
+      - name: rabbitmq
+        image: rabbitmq:3.13-management
+        ports:
+          - containerPort: 5672
+            name: amqp
+          - containerPort: 15672
+            name: http-mgmt
+        env:
+          - name: RABBITMQ_DEFAULT_USER
+            valueFrom:
+              secretKeyRef:
+                name: snapscale-secrets
+                key: RABBITMQ_USER
+          - name: RABBITMQ_DEFAULT_PASS
+            valueFrom:
+              secretKeyRef:
+                name: snapscale-secrets
+                key: RABBITMQ_PASSWORD
+        volumeMounts:
+          - name: rabbitmq-temp-storage
+            mountPath: /var/lib/rabbitmq
+      volumes:
+        - name: rabbitmq-temp-storage
+          emptyDir: {}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: rabbitmq-service
+spec:
+  selector:
+    app: snapscale-rabbitmq
+  ports:
+    - name: amqp
+      protocol: TCP
+      port: 5672
+      targetPort: 5672
+    - name: http-mgmt
+      protocol: TCP
+      port: 15672
+      targetPort: 15672
+  type: NodePort # Using NodePort so you can access the UI from your browser
