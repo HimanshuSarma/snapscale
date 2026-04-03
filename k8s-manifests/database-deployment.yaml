@@ -15,6 +15,37 @@ spec:
       initContainers:
       - name: init-db
         image: himanshusarma123/database-init:v1
+        env:
+          - name: MYSQL_ROOT_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: snapscale-secrets
+                key: DB_PASSWORD
+          - name: DB_HOST
+            valueFrom:
+              secretKeyRef:
+                name: snapscale-secrets
+                key: DB_HOST
+          - name: DB_USER
+            valueFrom:
+              secretKeyRef:
+                name: snapscale-secrets
+                key: DB_USER
+          - name: DB_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: snapscale-secrets
+                key: DB_PASSWORD
+          - name: DB_PORT
+            valueFrom:
+              secretKeyRef:
+                name: snapscale-secrets
+                key: DB_PORT
+          - name: DB_NAME
+            valueFrom:
+              secretKeyRef:
+                name: snapscale-secrets
+                key: DB_NAME
       containers:
       - name: mysql
         image: mysql:8.0
