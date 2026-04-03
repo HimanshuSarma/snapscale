@@ -17,9 +17,72 @@ spec:
         image: himanshusarma123/snapscale-producer:v1
         ports:
         - containerPort: 8000
-        envFrom:
-        - secretRef:
-            name: snapscale-secrets
+        env:
+          - name: DB_HOST
+            valueFrom:
+              secretKeyRef:
+                name: snapscale-secrets
+                key: DB_HOST
+          - name: DB_USER
+            valueFrom:
+              secretKeyRef:
+                name: snapscale-secrets
+                key: DB_USER
+          - name: DB_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: snapscale-secrets
+                key: DB_PASSWORD
+          - name: DB_PORT
+            valueFrom:
+              secretKeyRef:
+                name: snapscale-secrets
+                key: DB_PORT
+          - name: AWS_ACCESS_KEY_ID
+            valueFrom:
+              secretKeyRef:
+                name: snapscale-secrets
+                key: AWS_ACCESS_KEY_ID
+          - name: AWS_SECRET_ACCESS_KEY
+            valueFrom:
+              secretKeyRef:
+                name: snapscale-secrets
+                key: AWS_SECRET_ACCESS_KEY
+          - name: AWS_BUCKET_NAME
+            valueFrom:
+              secretKeyRef:
+                name: snapscale-secrets
+                key: AWS_BUCKET_NAME
+          - name: S3_DIRECTORY
+            valueFrom:
+              secretKeyRef:
+                name: snapscale-secrets
+                key: S3_DIRECTORY
+          - name: RABBITMQ_USER
+            valueFrom:
+              secretKeyRef:
+                name: snapscale-secrets
+                key: RABBITMQ_USER
+          - name: RABBITMQ_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: snapscale-secrets
+                key: RABBITMQ_PASSWORD
+          - name: RABBITMQ_HOST
+            valueFrom:
+              secretKeyRef:
+                name: snapscale-secrets
+                key: RABBITMQ_HOST
+          - name: RABBITMQ_PORT
+            valueFrom:
+              secretKeyRef:
+                name: snapscale-secrets
+                key: RABBITMQ_PORT
+          - name: QUEUE_NAME
+            valueFrom:
+              secretKeyRef:
+                name: snapscale-secrets
+                key: QUEUE_NAME
 ---
 apiVersion: v1
 kind: Service
