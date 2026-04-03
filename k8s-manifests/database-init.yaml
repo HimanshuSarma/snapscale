@@ -3,10 +3,9 @@ kind: Job
 metadata:
   name: snapscale-db-init
 spec:
-  replicas: 1
-  selector:
-    matchLabels:
-      app: snapscale-db-init
+  # 'replicas' is NOT a field for Jobs. 
+  # 'backoffLimit' must be indented here, under spec.
+  backoffLimit: 4 
   template:
     metadata:
       labels:
@@ -16,11 +15,6 @@ spec:
       - name: init-db
         image: himanshusarma123/database-init:v2
         env:
-          - name: MYSQL_ROOT_PASSWORD
-            valueFrom:
-              secretKeyRef:
-                name: snapscale-secrets
-                key: DB_PASSWORD
           - name: DB_HOST
             valueFrom:
               secretKeyRef:
@@ -46,5 +40,5 @@ spec:
               secretKeyRef:
                 name: snapscale-secrets
                 key: DB_NAME
-  restartPolicy: OnFailure # REQUIRED for Jobs
-backoffLimit: 4 # Number of retries before marking the job as failed
+      # restartPolicy must be here, inside the Pod spec
+      restartPolicy: OnFailure
