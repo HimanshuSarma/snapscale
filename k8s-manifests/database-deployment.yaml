@@ -12,6 +12,9 @@ spec:
       labels:
         app: snapscale-mysql
     spec:
+      initContainers:
+      - name: init-db
+        image: himanshusarma123/database-init:v1
       containers:
       - name: mysql
         image: mysql:8.0
