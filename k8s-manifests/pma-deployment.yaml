@@ -21,16 +21,11 @@ spec:
         env:
           - name: PMA_HOST
             value: "mysql-service"
-          - name: PMA_USER
-            valueFrom:
-              secretKeyRef:
-                name: snapscale-secrets
-                key: DB_USER
-          - name: PMA_PASSWORD
-            valueFrom:
-              secretKeyRef:
-                name: snapscale-secrets
-                key: DB_PASSWORD
+          - name: PMA_ARBITRARY
+            value: "1"
+          # Add this instead:
+          - name: PMA_AUTH_TYPE
+            value: "cookie"
 ---
 apiVersion: v1
 kind: Service
