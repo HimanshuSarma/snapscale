@@ -32,7 +32,7 @@ async function syncModel() {
     });
     console.log('✅ The images table was created (or already exists).');
   } catch (error) {
-    console.error('❌ Error syncing model:', error);
+    console.error('❌ Error syncing model:');
   }
 }
 

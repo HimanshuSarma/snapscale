@@ -33,7 +33,7 @@ async function syncModel() {
     });
     console.log('✅ The processed_images table was created (or already exists).');
   } catch (error) {
-    console.error('❌ Error syncing model:', error);
+    console.error('❌ Error syncing model:');
   }
 }
 
