@@ -16,7 +16,7 @@ spec:
       - name: mysql
         image: mysql:8.0
         env:
-          - name: DB_PASSWORD
+          - name: MYSQL_ROOT_PASSWORD
             valueFrom:
               secretKeyRef:
                 name: snapscale-secrets
