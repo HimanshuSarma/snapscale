@@ -1,0 +1,18 @@
+{
+  "name": "snapscale-init-db",
+  "version": "1.0.0",
+  "description": "Initialize the database with necessary tables",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "nodemon index.js"
+  },
+  "dependencies": {
+    "dotenv": "^16.6.1",
+    "mysql2": "^3.9.7",
+    "sequelize": "^6.37.8"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.0"
+  }
+}
