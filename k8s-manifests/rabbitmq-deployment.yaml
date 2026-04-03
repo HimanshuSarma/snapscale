@@ -50,8 +50,10 @@ spec:
       protocol: TCP
       port: 5672
       targetPort: 5672
+      nodePort: 30002 # External port for AMQP (code connection)
     - name: http-mgmt
       protocol: TCP
       port: 15672
       targetPort: 15672
+      nodePort: 30003 # External port for HTTP management (code connection)
   type: NodePort # Using NodePort so you can access the UI from your browser
