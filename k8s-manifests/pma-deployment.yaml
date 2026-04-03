@@ -20,11 +20,17 @@ spec:
             name: http
         env:
           - name: PMA_HOST
-            value: "mysql-service" # Internal DNS name of your MySQL service
-          - name: PMA_PORT
-            value: "3306"
-          - name: PMA_ARBITRARY
-            value: "1" # Allows you to enter server details at login if needed
+            value: "mysql-service"
+          - name: PMA_USER
+            valueFrom:
+              secretKeyRef:
+                name: snapscale-secrets
+                key: DB_USER
+          - name: PMA_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: snapscale-secrets
+                key: DB_PASSWORD
 ---
 apiVersion: v1
 kind: Service
