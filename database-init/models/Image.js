@@ -1,5 +1,4 @@
 const { DataTypes } = require('sequelize');
-const db = require('../dbConnection');
 
 const schema = {
   id: {
@@ -18,7 +17,7 @@ const schema = {
   }
 };
 
-const images = db.define('images', 
+const images = global.db.define('images', 
   schema, {
   tableName: 'images',
   timestamps: true,
@@ -28,7 +27,7 @@ const images = db.define('images',
 
 async function syncModel() {
   try {
-    await db.models.images.sync({
+    await global.db.models.images.sync({
       alter: true
     });
     console.log('✅ The images table was created (or already exists).');

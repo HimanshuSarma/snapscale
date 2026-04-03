@@ -1,5 +1,4 @@
 const { DataTypes } = require('sequelize');
-const db = require('../dbConnection');
 
 const schema = {
   id: {
@@ -36,7 +35,7 @@ const schema = {
   }
 };
 
-const jobs = db.define('jobs', 
+const jobs = global.db.define('jobs', 
   schema, {
   tableName: 'jobs',
   timestamps: true,
@@ -47,7 +46,7 @@ const jobs = db.define('jobs',
 // Optional: Manual sync if you need to create the table immediately
 async function syncModel() {
   try {
-    await db.models.jobs.sync({
+    await global.db.models.jobs.sync({
       alter: true
     });
     console.log('✅ The jobs table was created (or already exists).');
