@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: snapscale-pma
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: snapscale-pma
+  template:
+    metadata:
+      labels:
+        app: snapscale-pma
+    spec:
+      containers:
+      - name: phpmyadmin
+        image: phpmyadmin:latest
+        ports:
+          - containerPort: 80
+            name: http
+        env:
+          - name: PMA_HOST
+            value: "mysql-service" # Internal DNS name of your MySQL service
+          - name: PMA_PORT
+            value: "3306"
+          - name: PMA_ARBITRARY
+            value: "1" # Allows you to enter server details at login if needed
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: pma-service
+spec:
+  type: NodePort
+  selector:
+    app: snapscale-pma
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80
+      nodePort: 30004 # Access PMA UI at http://<NODE_IP>:30004
