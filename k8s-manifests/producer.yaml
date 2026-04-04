@@ -38,6 +38,12 @@ spec:
               secretKeyRef:
                 name: snapscale-secrets
                 key: DB_PORT
+          - name: AWS_REGION
+            valueFrom:
+              secretKeyRef:
+                name: snapscale-secrets
+                key: AWS_REGION
+          - name: AWS_SECRET_ACCESS_KEY
           - name: AWS_ACCESS_KEY_ID
             valueFrom:
               secretKeyRef:

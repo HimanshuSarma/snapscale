@@ -29,7 +29,7 @@ const ImageUpload = () => {
 
     try {
       // REPLACE with your Master/Worker EC2 Public IP + NodePort
-      const API_URL = "http://snapscale-producer-service:80/upload";
+      const API_URL = "http://snapscale-lb-490080191.us-east-1.elb.amazonaws.com/api/upload";
       
       const response = await axios.post(API_URL, formData, {
         headers: { 'Content-Type': 'multipart/form-data' }
