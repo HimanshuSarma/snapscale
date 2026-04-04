@@ -76,6 +76,7 @@ app.post('/upload', upload.single('image'), async (req, res) => {
 
     res.status(202).json({ jobId: newJob.id, status: 'queued' });
   } catch (err) {
+    console.log("Upload Error:", err);
     res.status(500).send("Failed to create job");
   }
 });
