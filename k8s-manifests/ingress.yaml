@@ -11,20 +11,19 @@ spec:
   rules:
   - http:
       paths:
-      # 1. Frontend: Added ()(.*) to match the $2 rewrite
-      - path: /()(.*)
-        pathType: ImplementationSpecific
-        backend:
-          service:
-            name: snapscale-frontend-svc
-            port:
-              number: 80
-
-      # 2. Producer: Added (/|$)(.*)
+      # 1. Producer: Added (/|$)(.*)
       - path: /api(/|$)(.*)
         pathType: ImplementationSpecific
         backend:
           service:
             name: snapscale-producer-service
+            port:
+              number: 80
+      # 2. Frontend: Added ()(.*) to match the $2 rewrite
+      - path: /()(.*)
+        pathType: ImplementationSpecific
+        backend:
+          service:
+            name: snapscale-frontend-svc
             port:
               number: 80
