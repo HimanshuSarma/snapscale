@@ -1,0 +1,39 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: snapscale-ingress
+  namespace: default
+  annotations:
+    # This matches the ingressClass used by your Helm installation
+    kubernetes.io/ingress.class: nginx
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
+spec:
+  rules:
+  - http:
+      paths:
+      # 1. Routing to your Frontend (nginx-test)
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: nginx-test
+            port:
+              number: 80
+
+      # 2. Routing to your Producer/Backend
+      - path: /api
+        pathType: Prefix
+        backend:
+          service:
+            name: snapscale-producer-service
+            port:
+              number: 80
+
+      # 3. Routing to phpMyAdmin (pma-service)
+      - path: /pma(/|$)(.*)
+        pathType: ImplementationSpecific
+        backend:
+          service:
+            name: pma-service
+            port:
+              number: 80
