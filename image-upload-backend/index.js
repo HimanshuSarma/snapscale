@@ -61,6 +61,8 @@ app.post('/upload', upload.single('image'), async (req, res) => {
       payload: { s3Url, text: "Hello World" }
     });
 
+    console.log(`New Job Created: ${newJob.dataValues.id} for Image ID: ${newImage.dataValues.id}`);
+
     // 2. Hand off the task to RabbitMQ
     if (global.channel) {
       const message = JSON.stringify({ 
@@ -72,6 +74,8 @@ app.post('/upload', upload.single('image'), async (req, res) => {
       global.channel.sendToQueue(process.env.QUEUE_NAME || 'image_processing', Buffer.from(message), {
         persistent: true 
       });
+
+      console.log(`Message sent to RabbitMQ for Job ID: ${newJob.dataValues.id}`);
     }
 
     res.status(202).json({ jobId: newJob.id, status: 'queued' });

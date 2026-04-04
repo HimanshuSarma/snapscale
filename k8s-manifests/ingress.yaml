@@ -6,7 +6,7 @@ metadata:
   annotations:
     kubernetes.io/ingress.class: nginx
     # This captures the second part of the regex to pass to the service
-    nginx.ingress.kubernetes.io/rewrite-target: /$2
+    nginx.ingress.kubernetes.io/rewrite-target: /
 spec:
   rules:
   - http:
@@ -19,15 +19,7 @@ spec:
             name: snapscale-producer-service
             port:
               number: 80
-      # 2. RabbitMQ Management UI: Added ()(.*) to match the $2 rewrite
-      - path: /job-queue(/|$)(.*)
-        pathType: ImplementationSpecific
-        backend:
-          service:
-            name: rabbitmq-service
-            port:
-              number: 15672
-      # 3. Frontend: Added ()(.*) to match the $2 rewrite
+      # 2. Frontend: Added ()(.*) to match the $2 rewrite
       - path: /()(.*)
         pathType: ImplementationSpecific
         backend:

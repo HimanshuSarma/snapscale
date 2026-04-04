@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: producer
-        image: himanshusarma123/snapscale-producer:v4
+        image: himanshusarma123/snapscale-producer:latest
         ports:
         - containerPort: 8000
         env:
