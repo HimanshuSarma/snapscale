@@ -19,7 +19,15 @@ spec:
             name: snapscale-producer-service
             port:
               number: 80
-      # 2. Frontend: Added ()(.*) to match the $2 rewrite
+      # 2. RabbitMQ Management UI: Added ()(.*) to match the $2 rewrite
+      - path: /job-queue(/|$)(.*)
+        pathType: ImplementationSpecific
+        backend:
+          service:
+            name: rabbitmq-service
+            port:
+              number: 15672
+      # 3. Frontend: Added ()(.*) to match the $2 rewrite
       - path: /()(.*)
         pathType: ImplementationSpecific
         backend:
