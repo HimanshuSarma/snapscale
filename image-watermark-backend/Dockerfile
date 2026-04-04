@@ -1,26 +1,33 @@
-# Use a light version of Node
-FROM node:18-slim
+# Use the full Debian-based Node image (contains more pre-installed libs)
+FROM node:18
 
-# Install system fonts and font-management utilities
-# fonts-liberation provides standard serif/sans-serif fonts
+# Install a full suite of graphic libraries and fonts
 RUN apt-get update && apt-get install -y \
-  fonts-liberation \
-  fontconfig \
-  && rm -rf /var/lib/apt/lists/* \
-  && fc-cache -f -v
+    build-essential \
+    libcairo2-dev \
+    libpango1.0-dev \
+    libjpeg-dev \
+    libgif-dev \
+    librsvg2-dev \
+    fontconfig \
+    fonts-dejavu \
+    fonts-liberation \
+    fonts-noto \
+    && rm -rf /var/lib/apt/lists/*
 
-# Create app directory
+# Force the system to recognize the new fonts
+RUN fc-cache -f -v
+
 WORKDIR /usr/src/app
 
-# Install dependencies first (for caching)
+# Install dependencies
 COPY package*.json ./
-RUN npm install --production
+# Remove --production temporarily to ensure build tools can compile native modules
+RUN npm install
 
 # Copy the rest of the code
 COPY . .
 
-# Expose the port (though consumers usually just listen to RabbitMQ)
 EXPOSE 8000
 
-# Start the server
 CMD [ "node", "index.js" ]

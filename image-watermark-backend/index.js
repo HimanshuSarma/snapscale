@@ -94,6 +94,8 @@ async function startWorker() {
         console.log(`[✅] Job ${jobId} finished. New URL: ${processedUrl}`);
         global.channel.ack(msg);
 
+        await db.models.jobs.destroy({ where: { id: jobId } });
+
       } catch (error) {
         console.error(`[❌] Error processing Job ID: ${jobId}`, error);
         await db.models.jobs.update({ status: 'failed' }, { where: { id: jobId } });
