@@ -16,7 +16,7 @@ spec:
         pathType: Prefix
         backend:
           service:
-            name: nginx-test
+            name: snapscale-frontend-svc
             port:
               number: 80
 
@@ -26,14 +26,5 @@ spec:
         backend:
           service:
             name: snapscale-producer-service
-            port:
-              number: 80
-
-      # 3. Routing to phpMyAdmin (pma-service)
-      - path: /pma(/|$)(.*)
-        pathType: ImplementationSpecific
-        backend:
-          service:
-            name: pma-service
             port:
               number: 80
