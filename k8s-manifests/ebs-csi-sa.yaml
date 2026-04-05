@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: ebs-csi-controller-sa
+  namespace: kube-system
+  annotations:
+    # This is the "Magic Link" that tells the Pod which AWS Role to assume
+    eks.amazonaws.com/role-arn: arn:aws:iam::935743309473:role/SnapScale-EBS-CSI-Role
+    # Optional: Helps with some older versions of the driver
+    eks.amazonaws.com/sts-regional-endpoints: "true"
